@@ -16,14 +16,18 @@ const BUGGED_IMAGE = {
   },
 };
 
-const fetchImageAndGetMetadata = async (image, isBugged) => {
+const fetchImageAndGetMetadata = async (image) => {
   const res = await fetch(image.url);
   const buffer = await res.arrayBuffer();
   const imageMetadata = await sharp(buffer).rotate().keepExif().metadata();
   const { width, height } = imageMetadata;
 
+  const isBugged =
+    image.originalDimensions.width !== width ||
+    image.originalDimensions.height !== height;
+
   console.log({
-    bugged: isBugged,
+    isBugged,
     originalDimensions: image.originalDimensions,
     sharp: {
       width,
