@@ -36,5 +36,5 @@ const fetchImageAndGetMetadata = async (image) => {
   });
 };
 
-fetchImageAndGetMetadata(WORKING_IMAGE, false);
-fetchImageAndGetMetadata(BUGGED_IMAGE, true);
+fetchImageAndGetMetadata(WORKING_IMAGE);
+fetchImageAndGetMetadata(BUGGED_IMAGE);
