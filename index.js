@@ -20,19 +20,20 @@ const fetchImageAndGetMetadata = async (image) => {
   const res = await fetch(image.url);
   const buffer = await res.arrayBuffer();
   const imageMetadata = await sharp(buffer).rotate().keepExif().metadata();
-  const { width, height } = imageMetadata;
+  const sharpDimensions = {
+    width: imageMetadata.width,
+    height: imageMetadata.height,
+  };
+  const { originalDimensions } = image;
 
   const isBugged =
-    image.originalDimensions.width !== width ||
-    image.originalDimensions.height !== height;
+    originalDimensions.width !== sharpDimensions.width ||
+    originalDimensions.height !== sharpDimensions.height;
 
   console.log({
     isBugged,
-    originalDimensions: image.originalDimensions,
-    sharp: {
-      width,
-      height,
-    },
+    originalDimensions,
+    sharpDimensions,
   });
 };
 
